@@ -16,7 +16,12 @@ return {
 				},
 				pickers = {
 					find_files = {
-						hidden = true,
+						-- respect .gitignore, but still surface gitignored .env* files
+						find_command = {
+							"sh",
+							"-c",
+							"{ rg --files --hidden -g '!.git/'; rg --files --hidden --no-ignore -g '.env*' -g '!node_modules/'; } | sort -u",
+						},
 					},
 				},
 				extensions = {
